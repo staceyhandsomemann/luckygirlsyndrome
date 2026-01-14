@@ -172,6 +172,29 @@ document.addEventListener('mouseup', () => {
     modalImg.style.cursor = zoomLevel > 1 ? 'grab' : 'default';
 });
 
+// Touch drag functionality for phones (single touch, only when zoomed in beyond 1x)
+modalImg.addEventListener('touchstart', (e) => {
+    if (e.touches.length === 1 && zoomLevel > 1) {
+        isDragging = true;
+        startX = e.touches[0].clientX - offsetX;
+        startY = e.touches[0].clientY - offsetY;
+        e.preventDefault(); // Prevent default touch behavior like scrolling
+    }
+});
+
+modalImg.addEventListener('touchmove', (e) => {
+    if (isDragging && e.touches.length === 1) {
+        offsetX = e.touches[0].clientX - startX;
+        offsetY = e.touches[0].clientY - startY;
+        updateZoom();
+        e.preventDefault(); // Prevent default touch behavior
+    }
+});
+
+modalImg.addEventListener('touchend', () => {
+    isDragging = false;
+});
+
 // Pinch zoom functionality for touch devices
 modalImg.addEventListener('touchstart', (e) => {
     if (e.touches.length === 2) {

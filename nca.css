@@ -797,17 +797,3 @@ body.dark-mode .date-selection button {
         grid-template-columns: repeat(2, 1fr); /* 1 column on tablets for simplicity */
     }
 }
-@media (max-width: 480px) {
-    .slideshow {
-        height: 200px;
-    }
-    .slideshow h2 {
-        font-size: 0.9em;
-    }
-    .slideshow p {
-        font-size: 0.8em;
-    }
-    .features-container {
-        grid-template-columns: 1fr; /* 1 column on phones (stacked) */
-    }
-}
