@@ -1,0 +1,813 @@
+@font-face { font-family: Helvetica; src: url('fonts/Helvetica.ttf'); } 
+body {
+    margin: 0;
+    font-family: Helvetica;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    transition: background-color 0.3s, color 0.3s; /* Smooth transition for dark mode */
+}
+header {
+    background-color: #f4f4f4;
+    color: #333;
+    padding: 1rem;
+    text-align: left;
+    display: none; /* Hide by default on larger screens */
+    justify-content: space-between;
+    align-items: center;
+}
+header h1 {
+    cursor: pointer; /* Change cursor to pointer for the clickable header */
+    margin: 0; /* Optional: Remove default margin for better alignment */
+}
+#menu-toggle {
+    background: none;
+    border: none;
+    color: #333;
+    font-size: 1.5rem;
+    cursor: pointer;
+    display: none; /* Hidden on desktop */
+}
+#close-menu {
+    background: none;
+    border: none;
+    color: #333;
+    font-size: 1.5rem;
+    cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: none; /* Hidden on desktop */
+}
+body.dark-mode #close-menu {
+    color: #e0e0e0;
+}
+#dark-mode-toggle {
+    background: none;
+    border: none;
+    color: #333;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+#dark-mode-toggle:hover {
+    background-color: rgb(0, 0, 0, 0.5); /* Darker on hover in light mode */
+}
+.container {
+    display: flex;
+    flex: 1;
+}
+.sidebar {
+    width: 200px; /* Fixed width for consistency */
+    background-color: #f4f4f4;
+    padding: 0.5rem;
+    box-sizing: border-box;
+    transition: background-color 0.3s;
+    border-radius: 8px;
+    display: block;
+    position: fixed; /* Makes it fixed in position */
+    left: 0;
+    top: 0;
+    height: 100vh; /* Full height */
+    overflow-y: auto; /* Allows scrolling if content exceeds height */
+}
+.sidebar ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+.sidebar li {
+    margin-bottom: 0.3rem;
+}
+.sidebar a {
+    text-decoration: none;
+    color: #333;
+    display: block;
+    padding: 0.5rem;
+    transition: color 0.3s, background-color 0.3s;
+    border-radius: 8px;
+
+}
+.sidebar a:hover {
+    color: #222;
+    background-color: #e4e4e4;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transition: background-color 0.3s, transform 0.3s;
+}
+/* Styling for the h1 in the sidebar */
+.sidebar h1 {
+    font-size: 1.8rem; /* Made bigger */
+    margin: 1rem 0.5rem;
+    padding: 1px;
+    cursor: pointer;
+    color: #333;
+    text-align: left;
+    line-height: 0.9; /* Adjusts line height for better spacing between lines */
+}
+/* Styling for the separator line */
+.sidebar-separator {
+    border: none; /* Removes default border */
+    border-top: 1px solid #ccc; /* Adds a thin gray line */
+    margin: 1.5rem 0; /* Adds some space above and below */
+    width: 100%; /* Makes it span the full width of the sidebar */
+}
+.contact-us {
+    position: absolute;
+    bottom: 12px;
+    left: 18px;
+    color: #333; /* Assuming dark background; adjust as needed */
+    font-size: 14px;
+    transition: background-color 0.3s, color 0.3s; /* Smooth transition for dark mode */
+}
+.contact-us h3 {
+    margin: 0 0 12px 0;
+    font-size: 16px;
+}
+.contact-us p {
+    margin: 2px 0;
+    line-height: 20px;
+}
+/* Adjust content to not be hidden behind the fixed sidebar */
+.content {
+    flex: 1;
+    padding: 1rem;
+    background-color: #fff;
+    transition: background-color 0.3s, color 0.3s;
+    margin-left: 200px; /* Matches sidebar width */
+}
+.content h1 {
+    margin-top: 0;
+    font-size:2.5em;
+}
+.content h2 {
+    margin-top: 0;
+    font-size:1.5em;
+}
+.photo-collage {
+    column-count: 4; /* Number of columns for the masonry layout */
+    column-gap: 10px; /* Gap between columns */
+    margin-top: 1rem;
+}
+.photo-collage img {
+    width: 90%;
+    height: auto;
+    border-radius: 8px;
+    transition: transform 0.3s;
+    display: block;
+    cursor: pointer;
+
+    /* REAL vertical spacing that works with columns */
+    margin: 0 auto 32px auto;
+
+    /* Prevent column weirdness */
+    break-inside: avoid;
+    page-break-inside: avoid;
+
+    /* Shadow */
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+.photo-collage img:hover {
+    transform: scale(1.05);
+}
+/* Modal styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 2000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.9);
+    transition: opacity 0.3s;
+}
+.modal-content {
+    margin: auto;
+    display: block;
+    max-width: 90%;
+    max-height: 90%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.close {
+    position: absolute;
+    top: 15px;
+    right: 35px;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 2001;
+}
+.close:hover, .close:focus {
+    color: #bbb;
+}
+/* Slideshow styles */
+.slideshow {
+    position: relative;
+    width: 100%;
+    height: 780px; /* Adjust as needed */
+    overflow: hidden;
+    border: 1px solid #ccc;
+    margin-top: 0rem;
+    border: none;
+    border-radius: 10px;
+}
+.slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+
+}
+.slide.active {
+    opacity: 1;
+}
+.slideshow h2 {
+    position: absolute;
+    bottom: 6.5%; /* Dynamic: proportional to slideshow height */
+    left: 10px;
+    color: white;
+    padding: 5px 10px;
+    margin: 0;
+    font-size: 2.4em;
+    z-index: 1;
+}
+.slideshow p {
+    position: absolute;
+    bottom: 4.5%; /* Dynamic: proportional to slideshow height */
+    left: 10px;
+    color: white;
+    padding: 5px 10px;
+    margin: 0;
+    font-size: 1em;
+    z-index: 1;
+}
+.weird-square {
+    position: absolute;
+    top: 650px;
+    left: 10px;
+    width: 420px;
+    height: 250px;
+    background-color: rgb(255, 255, 255); /* Semi-transparent red */
+    z-index: 2;
+}
+.weird-square h2 {
+    position: absolute;
+    top: 4px;
+    color: black;
+    padding: 5px 10px;
+    margin: 0;
+    font-size: 2.4em;
+    z-index: 3;
+}
+.weird-square p {
+    position: absolute;
+    top: 42px;
+    color: black;
+    padding: 5px 10px;
+    margin: 0;
+    font-size: 1.3em;
+    z-index: 3;
+}
+.redirectrates {
+    position: absolute;
+    top: 736px;
+    left: 28px;
+    z-index: 4;
+}
+.redirectrates button {
+    margin: 0 5px;
+    padding: 5px 10px;
+    background: rgba(255, 255, 255, 0.5);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    color: rgb(0, 0, 0);
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s, color 0.3s; /* Smooth transition for dark mode */
+}
+.redirectrates button:hover {
+    background: rgba(100, 100, 100, 0.5);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+/* Features container and items (new for horizontal 3-column layout) */
+.features {
+    margin-top: 3.5rem;
+    font-size: 1.2em;
+    text-align: center;
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
+    padding-bottom: 100px;
+}
+.features-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 columns horizontally */
+    gap: 1rem; /* Space between items */
+    margin-top: 3rem;
+}
+.feature-item {
+    padding: 3rem;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transition: background-color 0.3s, transform 0.3s;
+    position: relative;
+    padding-top: 2.5rem;
+    padding-bottom: 2rem;
+    text-align: center;
+}
+.feature-item::before {
+    position: absolute;
+    left: 0.5rem;
+    top: 1rem;
+    font-size: 1.5em;
+    color: #333;
+}
+.feature-item:hover {
+    background-color: #e4e4e4;
+    transform: translateY(-2px);
+}
+/* FAQs container and items (new for horizontal 3-column layout) */
+.faqs {
+    margin-top: 3.5rem;
+    font-size: 1.2em;
+    text-align: center;
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
+    padding-bottom: 100px;
+}
+.faqs-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 columns horizontally */
+    gap: 1rem; /* Space between items */
+    margin-top: 3rem;
+}
+.faqs-item {
+    padding: 3rem;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transition: background-color 0.3s, transform 0.3s;
+    position: relative;
+    padding-top: 2.5rem;
+    padding-bottom: 2rem;
+    text-align: center;
+}
+.faqs-item::before {
+    position: absolute;
+    left: 0.5rem;
+    top: 1rem;
+    font-size: 1.5em;
+    color: #333;
+}
+/* Date selection styles */
+.date-selection {
+    border: 2px solid #1e1e1e;
+    background-color: #f4f4f4;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s, color 0.3s; /* Smooth transition for dark mode */
+}
+.date-selection label {
+    font-weight: bold;
+    color: #1e1e1e;
+    transition: background-color 0.3s, color 0.3s; /* Smooth transition for dark mode */
+}
+.date-selection input[type="date"] {
+    margin-left: 10px;
+    padding: 5px;
+    border: 1px solid #333;
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s; /* Smooth transition for dark mode */
+}
+.date-selection button {
+    margin: 0;
+    padding: 5px 10px;
+    background: rgba(131, 131, 131, 0.5);
+    color: black;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s, color 0.3s; /* Smooth transition for dark mode */
+}
+/* Dark mode styles */
+body.dark-mode {
+    background-color: #121212;
+    color: #e0e0e0;
+}
+body.dark-mode #menu-toggle {
+    color: #f4f4f4;
+}
+body.dark-mode header {
+    background-color: #1e1e1e;
+    color: #f4f4f4;
+}
+body.dark-mode #dark-mode-toggle {
+    color: rgb(255, 255, 255); /* Lighter on hover in dark mode */
+}
+body.dark-mode #dark-mode-toggle:hover {
+    background-color: rgba(255, 255, 255, 0.3); /* Lighter on hover in dark mode */
+}
+body.dark-mode .sidebar {
+    background-color: #1e1e1e;
+}
+body.dark-mode .sidebar h1 {
+    color: #e0e0e0;
+}
+body.dark-mode .sidebar a {
+    color: #e0e0e0;
+}
+body.dark-mode .sidebar a:hover {
+    color: #fff;
+    background-color: #333;
+}
+body.dark-mode .contact-us {
+    color: #e0e0e0;
+}
+body.dark-mode .content {
+    background-color: #121212;
+    color: #e0e0e0;
+}
+body.dark-mode .photo-collage img {
+    box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+}
+body.dark-mode .weird-square {
+    background-color: rgb(0, 0, 0);
+}
+body.dark-mode .weird-square h2 {
+    color: rgb(255, 255, 255);
+}
+body.dark-mode .weird-square p {
+    color: rgb(255, 255, 255);
+}
+body.dark-mode .redirectrates button {
+    background: rgba(255, 255, 255, 0.25);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    color: rgb(255, 255, 255);
+}
+body.dark-mode .redirectrates button:hover {
+    background: rgba(255, 255, 255, 0.5);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+body.dark-mode .feature-item {
+    background-color: #1e1e1e;
+    color: #e0e0e0;
+}
+body.dark-mode .feature-item:hover {
+    background-color: #333;
+}
+body.dark-mode .feature-item::before {
+    color: #e0e0e0;
+}
+body.dark-mode .faqs-item {
+    background-color: #1e1e1e;
+    color: #e0e0e0;
+}
+body.dark-mode .faqs-item::before {
+    color: #e0e0e0;
+}
+body.dark-mode .date-selection {
+    border: 2px solid #f4f4f4; /* Scarlet red border */
+    background-color: #1e1e1e; /* Light red background */
+}
+body.dark-mode .date-selection label {
+    color: #f4f4f4; /* Darker red for labels */
+}
+body.dark-mode .date-selection input[type="date"] {
+    border: 1px solid #f4f4f4;
+    background-color: #1e1e1e; /* Light red background */
+    color: #e0e0e0;
+}
+body.dark-mode .date-selection button {
+    background: rgba(54, 54, 54, 0.5);
+    color: white;
+}
+#zoom-in, #zoom-out {
+    display: none; /* Hide zoom buttons */
+}
+@media (max-width: 768px) {
+    #menu-toggle {
+        display: block; /* Show hamburger on mobile */
+    }
+    #close-menu {
+        display: block; /* Show close button on mobile */
+    }
+    header {
+        display: flex; /* Show on tablet and phone */
+    }
+    #dark-mode-toggle {
+        background: none;
+        border: none;
+        color: #333;
+        padding: 0.5rem 1rem;
+        cursor: pointer;
+        border-radius: 4px;
+        transition: background-color 0.3s, color 0.3s, border-color 0.3s; /* Smooth transitions */
+    }
+    body.dark-mode #dark-mode-toggle {
+        color: #e0e0e0;
+    }
+
+    #dark-mode-toggle:hover {
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    body.dark-mode #dark-mode-toggle:hover {
+        background-color: rgba(255, 255, 255, 0.3);
+    }
+    .container {
+        flex-direction: column;
+    }
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: -200px; /* Hides the sidebar */
+        width: 200px;
+        height: 100vh;
+        background-color: #f4f4f4;
+        padding: 0.5rem;
+        box-sizing: border-box;
+        transition: left 0.3s;
+        z-index: 1001;
+        overflow-y: auto; /* In case content overflows */
+    }
+    .sidebar.open {
+        left: 0; /* Slide in */
+    }
+    .sidebar h1 {
+        display: none;
+    }
+    /* Styling for the separator line */
+    .sidebar-separator {
+        display: none;
+    }
+    body.dark-mode .sidebar {
+        background-color: #1e1e1e;
+    }
+    .sidebar ul {
+        flex-direction: column; /* Vertical list */
+    }
+    .sidebar li {
+        margin-bottom: 0.3rem;
+    }
+    .sidebar a {
+        padding: 0.5rem;
+    }
+    .content {
+        order: 1; /* Content first */
+        margin-left: 0px;
+    }
+    .photo-collage {
+        column-count: 2; /* Fewer columns on mobile for better readability */
+    }
+    .slideshow {
+        height: 300px;
+    }
+    .slideshow h2 {
+        font-size: 2em;
+        left: 5px;
+        bottom: 16.5%; /* Dynamic: proportional to slideshow height */
+
+    }
+    .slideshow p {
+        font-size: 0.9em;
+        left: 5px;
+        bottom: 11.5%; /* Dynamic: proportional to slideshow height */
+    }
+    .weird-square {
+        position: absolute;
+        top: 210px;
+        left: 10px;
+        width: 220px;
+        height: 250px;
+    }
+    .weird-square h2 {
+        position: absolute;
+        top: 4px;
+        color: black;
+        padding: 5px 10px;
+        margin: 0;
+        font-size: 1.5em;
+        z-index: 3;
+    }
+    .weird-square p {
+        position: absolute;
+        top: 32px;
+        color: black;
+        padding: 5px 10px;
+        margin: 0;
+        font-size: 0.8em;
+        z-index: 3;
+    }
+    .redirectrates {
+        position: absolute;
+        top: 270px;
+        left: 20px;
+        z-index: 4;
+    }
+    .redirectrates button {
+        font-size: 0.8em;
+    }
+    .features {
+        margin-top: 2rem;
+        font-size: 1.2em;
+        text-align: center;
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+    .features-container {
+        grid-template-columns: repeat(1, 1fr); /* 2 columns on tablets */
+    }
+    .faqs {
+        margin-top: 2rem;
+        font-size: 1.2em;
+        text-align: center;
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+    .faqs-container {
+        grid-template-columns: repeat(1, 1fr); /* 2 columns on tablets */
+    }
+}
+
+/* Tablet functionality (same layout as mobile, but for screens 769px to 1024px) */
+@media (min-width: 769px) and (max-width: 1100px) {
+    #menu-toggle {
+        display: block; /* Show hamburger on tablet */
+    }
+    #close-menu {
+        display: block; /* Show close button on tablet */
+    }
+    header {
+        display: flex; /* Show on tablet */
+    }
+    #dark-mode-toggle {
+        background: none;
+        border: none;
+        color: #333;
+        padding: 0.5rem 1rem;
+        cursor: pointer;
+        border-radius: 4px;
+        transition: background-color 0.3s, color 0.3s, border-color 0.3s; /* Smooth transitions */
+    }
+    body.dark-mode #dark-mode-toggle {
+        color: #e0e0e0;
+    }
+
+    #dark-mode-toggle:hover {
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    body.dark-mode #dark-mode-toggle:hover {
+        background-color: rgba(255, 255, 255, 0.3);
+    }
+    .container {
+        flex-direction: column;
+    }
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: -200px; /* Hides the sidebar */
+        width: 200px;
+        height: 100vh;
+        background-color: #f4f4f4;
+        padding: 0.5rem;
+        box-sizing: border-box;
+        transition: left 0.3s;
+        z-index: 1001;
+        overflow-y: auto; /* In case content overflows */
+    }
+    .sidebar.open {
+        left: 0; /* Slide in */
+    }
+    .sidebar h1 {
+        display: none;
+    }
+    /* Styling for the separator line */
+    .sidebar-separator {
+        display: none;
+    }
+    body.dark-mode .sidebar {
+        background-color: #1e1e1e;
+    }
+    .sidebar ul {
+        flex-direction: column; /* Vertical list */
+    }
+    .sidebar li {
+        margin-bottom: 0.3rem;
+    }
+    .sidebar a {
+        padding: 0.5rem;
+    }
+    .content {
+        order: 1; /* Content first */
+        margin-left: 0px;
+    }
+    .photo-collage {
+        column-count: 2; /* Fewer columns on tablet for better readability */
+    }
+    .slideshow {
+        height: 300px;
+    }
+    .slideshow h2 {
+        font-size: 2em;
+        left: 5px;
+        bottom: 16.5%; /* Dynamic: proportional to slideshow height */
+
+    }
+    .slideshow p {
+        font-size: 0.9em;
+        left: 5px;
+        bottom: 11.5%; /* Dynamic: proportional to slideshow height */
+
+    }
+    .weird-square {
+        position: absolute;
+        top: 210px;
+        left: 10px;
+        width: 220px;
+        height: 250px;
+    }
+    .weird-square h2 {
+        position: absolute;
+        top: 4px;
+        color: black;
+        padding: 5px 10px;
+        margin: 0;
+        font-size: 1.5em;
+        z-index: 3;
+    }
+    .weird-square p {
+        position: absolute;
+        top: 32px;
+        color: black;
+        padding: 5px 10px;
+        margin: 0;
+        font-size: 0.8em;
+        z-index: 3;
+    }
+    .redirectrates {
+        position: absolute;
+        top: 270px;
+        left: 20px;
+        z-index: 4;
+    }
+    .redirectrates button {
+        font-size: 0.8em;
+    }
+    .features {
+        margin-top: 2rem;
+        font-size: 1.2em;
+        text-align: center;
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+    .features {
+        margin-top: 2rem;
+        font-size: 1.2em;
+        text-align: center;
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+    .features-container {
+        grid-template-columns: repeat(1, 1fr); /* 1 column on tablets for simplicity */
+    }
+    .faqs {
+        margin-top: 2rem;
+        font-size: 1.2em;
+        text-align: center;
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+    .faqs-container {
+        grid-template-columns: repeat(2, 1fr); /* 1 column on tablets for simplicity */
+    }
+}
+@media (max-width: 480px) {
+    .slideshow {
+        height: 200px;
+    }
+    .slideshow h2 {
+        font-size: 0.9em;
+    }
+    .slideshow p {
+        font-size: 0.8em;
+    }
+    .features-container {
+        grid-template-columns: 1fr; /* 1 column on phones (stacked) */
+    }
+}

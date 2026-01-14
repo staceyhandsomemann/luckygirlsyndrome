@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Now | Scarlet Photography</title>
+    <link rel="stylesheet" href="nca.css">
+    <style>
+        /* Modal styles for wider modals and white backdrop */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+        }
+        .modal-content {
+            background-color: #fefefe;
+            color: black;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%; /* Made wider: increased from typical 50-60% to 80% */
+            max-width: 600px; /* Added max-width for larger screens */
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+    <script src="nca.js" defer></script>
+</head>
+<body>
+    <header>
+        <h1 onclick="redirect(event)">Scarlet Photography</h1>
+        <!-- Hamburger menu button -->
+        <button id="menu-toggle">☰</button>
+    </header>
+    <div class="container">
+        <aside class="sidebar">
+            <!-- Exit button -->
+            <button id="close-menu">×</button>
+            <!-- Added Scarlet Photography title at the top -->
+            <h1 onclick="redirect(event)">Scarlet<br>Photography</h1>
+            <!-- Added separator line -->
+            <hr class="sidebar-separator">
+            <ul>
+                <li><a href="index.html">Home</a></a></li>
+                <li><a href="portfolio.html">Portfolio</a></li>
+                <li><a href="rates.html">Book Us</a></li>
+                <li><a href="faqs.html">FAQs</a></li>
+                <li><button id="dark-mode-toggle">🌑 (Dark mode?)</button></li>
+            </ul>
+            <!-- Spacer to create big space -->
+            <div style="height: 200px;"></div>
+            <!-- Added Contact Us section -->
+            <div class="contact-us">
+                <h3>Contact Us</h3>
+                <p><b>Facebook:</b> Scarlet Photography</p>
+                <p><b>Email:</b> scarletphotography<br>@gmail.com</p>
+                <p><b>Phone:</b> +63 966 633 6522</p>
+            </div>
+        </aside>
+        <main class="content">
+            <h1>Book a Session</h1>
+            <p>We offer flexible booking for your photography needs.</p>
+            <br>
+            <!-- Decorated Booking Form in a themed div -->
+            <div class="scarlet-booking-container">
+                <form id="booking-form">
+                    <!-- Added decorated div for date selection -->
+                    <div class="date-selection">
+                        <label for="date-from">From Date:</label>
+                        <input type="date" id="date-from" required><br><br>
+                        <label for="date-to">To Date:</label>
+                        <input type="date" id="date-to" required><br><br>
+                        <p><b>Note:</b> Our rates are fixed at ₱200 per hour.</p>
+                        <button id="book-btn">Book Now</button>
+                    </div>
+                </form>
+            </div>
+        </main>
+    </div>
+    
+    <!-- Payment Modal -->
+    <div id="payment-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="close-payment">&times;</span>
+            <h2>Payment Details</h2>
+            <form id="payment-form">
+                <label for="name">Full Name:</label>
+                <input type="text" id="name" required><br><br>
+                
+                <label for="email">Email:</label>
+                <input type="email" id="email" required><br><br>
+                
+                <label for="phone">Phone:</label>
+                <input type="tel" id="phone" required><br><br>
+                
+                <label for="payment-method">Payment Method:</label>
+                <select id="payment-method" required>
+                    <option value="">Select</option>
+                    <option value="Cash">Cash</option>
+                    <option value="GCash">GCash</option>
+                    <option value="Credit Card">Credit Card</option>
+                    <option value="Bank Transfer">Bank Transfer</option>
+                </select><br><br>
+                
+                <label for="gcash-number" id="gcash-label" style="display:none;">GCash Number:</label>
+                <input type="text" id="gcash-number" style="display:none;"><br><br>
+                
+                <label for="card-number" id="card-label" style="display:none;">Card Number:</label>
+                <input type="text" id="card-number" style="display:none;"><br><br>
+                
+                <label for="expiry" id="expiry-label" style="display:none;">Expiry Date:</label>
+                <input type="month" id="expiry" style="display:none;"><br><br>
+                
+                <label for="cvv" id="cvv-label" style="display:none;">CVV:</label>
+                <input type="text" id="cvv" style="display:none;"><br><br>
+                
+                <button type="button" id="pay-btn">Pay and Confirm</button>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Receipt Modal -->
+    <div id="receipt-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="close-receipt">&times;</span>
+            <h2>Booking Receipt</h2>
+            <div id="receipt-details"></div>
+            <button id="print-receipt">Print Receipt</button>
+        </div>
+    </div>
+    <script>
+        // Booking functionality
+        const bookBtn = document.getElementById('book-btn');
+        const paymentModal = document.getElementById('payment-modal');
+        const closePayment = document.getElementById('close-payment');
+        const payBtn = document.getElementById('pay-btn');
+        const receiptModal = document.getElementById('receipt-modal');
+        const closeReceipt = document.getElementById('close-receipt');
+        const printReceipt = document.getElementById('print-receipt');
+        const paymentMethod = document.getElementById('payment-method');
+        const cardLabel = document.getElementById('card-label');
+        const cardNumber = document.getElementById('card-number');
+        const gCashLabel = document.getElementById('gcash-label');
+        const gCashNumber = document.getElementById('gcash-number');
+        const expiryLabel = document.getElementById('expiry-label');
+        const expiry = document.getElementById('expiry');
+        const cvvLabel = document.getElementById('cvv-label');
+        const cvv = document.getElementById('cvv');
+
+        // Open payment modal on book button click
+        bookBtn.addEventListener('click', (event) => {
+            event.preventDefault(); // Prevent form submission
+            const dateFrom = document.getElementById('date-from').value;
+            const dateTo = document.getElementById('date-to').value;
+            if (!dateFrom || !dateTo) {
+                alert('Please fill in all booking details.');
+                return;
+            }
+            if (new Date(dateFrom) > new Date(dateTo)) {
+                alert('From date cannot be after To date.');
+                return;
+            }
+            paymentModal.style.display = 'block';
+        });
+
+        // Close payment modal
+        closePayment.addEventListener('click', () => {
+            paymentModal.style.display = 'none';
+        });
+
+        // Show/hide credit card fields based on payment method
+        paymentMethod.addEventListener('change', () => {
+            if (paymentMethod.value === 'Credit Card') {
+                cardLabel.style.display = 'block';
+                cardNumber.style.display = 'block';
+                gCashLabel.style.display = 'none';
+                gCashNumber.style.display = 'none';
+                expiryLabel.style.display = 'block';
+                expiry.style.display = 'block';
+                cvvLabel.style.display = 'block';
+                cvv.style.display = 'block';
+                cardNumber.required = true;
+                expiry.required = true;
+                cvv.required = true;
+            }
+            else if (paymentMethod.value === 'GCash') {
+                cardLabel.style.display = 'none';
+                cardNumber.style.display = 'none';
+                gCashLabel.style.display = 'block';
+                gCashNumber.style.display = 'block';
+                expiryLabel.style.display = 'none';
+                expiry.style.display = 'none';
+                cvvLabel.style.display = 'none';
+                cvv.style.display = 'none';
+                cardNumber.required = true;
+                expiry.required = false;
+                cvv.required = false;
+            }
+            else {
+                cardLabel.style.display = 'none';
+                cardNumber.style.display = 'none';
+                gCashLabel.style.display = 'none';
+                gCashNumber.style.display = 'none';
+                expiryLabel.style.display = 'none';
+                expiry.style.display = 'none';
+                cvvLabel.style.display = 'none';
+                cvv.style.display = 'none';
+                cardNumber.required = false;
+                expiry.required = false;
+                cvv.required = false;
+            }
+        });
+
+        // Handle payment and show receipt
+        payBtn.addEventListener('click', (event) => {
+            event.preventDefault(); // Prevent form submission
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const method = paymentMethod.value;
+            const dateFrom = document.getElementById('date-from').value;
+            const dateTo = document.getElementById('date-to').value;
+            
+            if (!name || !email || !phone || !method) {
+                alert('Please fill in all payment details.');
+                return;
+            }
+            if (method === 'credit-card' && (!cardNumber.value || !expiry.value || !cvv.value)) {
+                alert('Please fill in credit card details.');
+                return;
+            }
+            
+            // Generate receipt
+            const receiptDetails = `
+                <p><strong>Scarlet Photography</strong></p>
+                <br>
+                <br>
+                <p><strong>Name:</strong> ${name}</p>
+                <p><strong>Email:</strong> ${email}</p>
+                <p><strong>Phone:</strong> ${phone}</p>
+                <p><strong>Payment Method:</strong> ${method}</p>
+                <p><strong>Booking Dates:</strong> ${dateFrom} to ${dateTo} (YYYY/MM/DD)</p>
+                <p><strong>Status:</strong> Confirmed</p>
+                <br>
+                <br>
+                <br>
+                <p>Feel free to contact us if you have any questions.</p>
+                <p>Facebook: Scarlet Photography</p>
+                <p>Number: (+63) 912 345 6789</p>
+            `;
+            document.getElementById('receipt-details').innerHTML = receiptDetails;
+            
+            paymentModal.style.display = 'none';
+            receiptModal.style.display = 'block';
+        });
+
+        // Close receipt modal
+        closeReceipt.addEventListener('click', () => {
+            receiptModal.style.display = 'none';
+        });
+
+        // Print receipt
+        printReceipt.addEventListener('click', () => {
+            window.print();
+        });
+
+        // Close modals when clicking outside
+        window.addEventListener('click', (event) => {
+            if (event.target === paymentModal) {
+                paymentModal.style.display = 'none';
+            }
+            if (event.target === receiptModal) {
+                receiptModal.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>

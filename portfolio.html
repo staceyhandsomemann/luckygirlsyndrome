@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio | Scarlet Photography</title>
+    <link rel="stylesheet" href="nca.css">
+    <script src="nca.js" defer></script>
+</head>
+<body>
+    <header>
+        <h1 onclick="redirect(event)">Scarlet Photography</h1>
+        <!-- Hamburger menu button -->
+        <button id="menu-toggle">☰</button>
+    </header>
+    <div class="container">
+        <aside class="sidebar">
+            <!-- Exit button -->
+            <button id="close-menu">×</button>
+            <!-- Added Scarlet Photography title at the top -->
+            <h1 onclick="redirect(event)">Scarlet<br>Photography</h1>
+            <!-- Added separator line -->
+            <hr class="sidebar-separator">
+            <ul>
+                <li><a href="index.html">Home</a></a></li>
+                <li><a href="portfolio.html">Portfolio</a></li>
+                <li><a href="rates.html">Book Us</a></li>
+                <li><a href="faqs.html">FAQs</a></li>
+                <li><button id="dark-mode-toggle">🌑 (Dark mode?)</button></li>
+            </ul>
+            <!-- Spacer to create big space -->
+            <div style="height: 200px;"></div>
+            <!-- Added Contact Us section -->
+            <div class="contact-us">
+                <h3>Contact Us</h3>
+                <p><b>Facebook:</b> Scarlet Photography</p>
+                <p><b>Email:</b> scarletphotography<br>@gmail.com</p>
+                <p><b>Phone:</b> +63 966 633 6522</p>
+            </div>
+        </aside>
+        <main class="content">
+            <h1>Our Portfolio</h1>
+            <p>This is my current portfolio. All of the people's consents have been obtained for this Website. Note that these are all <b>RAW photos</b>. All are adjusted in the camera itself.</p>
+            <br>
+            <div class="photo-collage">
+                <img src="photos/1.JPG" alt="Photo 1">
+                <img src="photos/2.JPG" alt="Photo 2">
+                <img src="photos/3.JPG" alt="Photo 3">
+                <img src="photos/4.JPG" alt="Photo 4">
+                <img src="photos/5.JPG" alt="Photo 5">
+                <img src="photos/6.JPG" alt="Photo 6">
+                <img src="photos/7.JPG" alt="Photo 7">
+                <img src="photos/8.JPG" alt="Photo 8">
+                <img src="photos/9.JPG" alt="Photo 9">
+                <img src="photos/10.JPG" alt="Photo 10">
+                <img src="photos/11.JPG" alt="Photo 11">
+                <img src="photos/12.JPG" alt="Photo 12">
+                <img src="photos/13.JPG" alt="Photo 13">
+                <img src="photos/14.JPG" alt="Photo 14">
+                <img src="photos/15.JPG" alt="Photo 15">
+                <img src="photos/16.JPG" alt="Photo 16">
+                <img src="photos/17.JPG" alt="Photo 17">
+            </div>
+        </main>
+    </div>
+    <!-- Modal for full-size image display -->
+    <div id="image-modal" class="modal">
+        <span class="close">&times;</span>
+        <button id="zoom-in">+</button>
+        <button id="zoom-out">-</button>
+        <img class="modal-content" id="modal-image">
+    </div>
+</body>
+</html>
