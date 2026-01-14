@@ -6,6 +6,7 @@ body {
     flex-direction: column;
     height: 100vh;
     transition: background-color 0.3s, color 0.3s; /* Smooth transition for dark mode */
+    font-size: 1.2em;
 }
 header {
     background-color: #f4f4f4;
@@ -145,6 +146,24 @@ body.dark-mode #close-menu {
     margin-top: 0;
     font-size:1.5em;
 }
+.description {
+    margin-left: 3.5rem;
+    margin-right: 3.5rem;
+    margin-top: 3.5rem;
+    padding: 5rem;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transition: background-color 0.3s, transform 0.3s;
+    position: relative;
+    padding-top: 2.5rem;
+    padding-bottom: 2rem;
+    text-align: center;
+}
+.description p {
+    font-size: 1.2em;
+    line-height: 0.9;
+}
 .photo-collage {
     column-count: 4; /* Number of columns for the masonry layout */
     column-gap: 10px; /* Gap between columns */
@@ -259,8 +278,9 @@ body.dark-mode #close-menu {
     left: 10px;
     width: 420px;
     height: 250px;
-    background-color: rgb(255, 255, 255); /* Semi-transparent red */
+    background-color: rgba(255, 255, 255, 0.85); /* Semi-transparent red */
     z-index: 2;
+    transition: background-color 0.3s, color 0.3s; /* Smooth transition for dark mode */
 }
 .weird-square h2 {
     position: absolute;
@@ -268,7 +288,7 @@ body.dark-mode #close-menu {
     color: black;
     padding: 5px 10px;
     margin: 0;
-    font-size: 2.4em;
+    font-size: 2em;
     z-index: 3;
 }
 .weird-square p {
@@ -277,7 +297,7 @@ body.dark-mode #close-menu {
     color: black;
     padding: 5px 10px;
     margin: 0;
-    font-size: 1.3em;
+    font-size: 1em;
     z-index: 3;
 }
 .redirectrates {
@@ -373,12 +393,14 @@ body.dark-mode #close-menu {
 }
 /* Date selection styles */
 .date-selection {
-    border: 2px solid #1e1e1e;
-    background-color: #f4f4f4;
-    padding: 15px;
-    border-radius: 10px;
-    margin-bottom: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 3rem;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    position: relative;
+    padding-top: 2.5rem;
+    padding-bottom: 2rem;
+    text-align: center;
     transition: background-color 0.3s, color 0.3s; /* Smooth transition for dark mode */
 }
 .date-selection label {
@@ -417,10 +439,10 @@ body.dark-mode header {
     color: #f4f4f4;
 }
 body.dark-mode #dark-mode-toggle {
-    color: rgb(255, 255, 255); /* Lighter on hover in dark mode */
+    color: #e0e0e0;
 }
 body.dark-mode #dark-mode-toggle:hover {
-    background-color: rgba(255, 255, 255, 0.3); /* Lighter on hover in dark mode */
+    background-color: #333;
 }
 body.dark-mode .sidebar {
     background-color: #1e1e1e;
@@ -432,7 +454,7 @@ body.dark-mode .sidebar a {
     color: #e0e0e0;
 }
 body.dark-mode .sidebar a:hover {
-    color: #fff;
+    color: #e0e0e0;
     background-color: #333;
 }
 body.dark-mode .contact-us {
@@ -442,22 +464,26 @@ body.dark-mode .content {
     background-color: #121212;
     color: #e0e0e0;
 }
+body.dark-mode .description {
+    background-color: #1e1e1e;
+    color: #e0e0e0;
+}
 body.dark-mode .photo-collage img {
     box-shadow: 0 4px 10px rgba(0,0,0,0.4);
 }
 body.dark-mode .weird-square {
-    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.85);
 }
 body.dark-mode .weird-square h2 {
-    color: rgb(255, 255, 255);
+    color: #e0e0e0;
 }
 body.dark-mode .weird-square p {
-    color: rgb(255, 255, 255);
+    color: #e0e0e0;
 }
 body.dark-mode .redirectrates button {
-    background: rgba(255, 255, 255, 0.25);
+    background-color: #1e1e1e;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    color: rgb(255, 255, 255);
+    color: #e0e0e0;
 }
 body.dark-mode .redirectrates button:hover {
     background: rgba(255, 255, 255, 0.5);
@@ -521,7 +547,12 @@ body.dark-mode .date-selection button {
     body.dark-mode #dark-mode-toggle {
         color: #e0e0e0;
     }
-
+    .description {
+        margin-left: 1rem;
+        margin-right: 1rem;
+        margin-top: 1rem;
+        padding: 2rem;
+    }
     #dark-mode-toggle:hover {
         background-color: rgba(0, 0, 0, 0.5);
     }
@@ -601,7 +632,7 @@ body.dark-mode .date-selection button {
         color: black;
         padding: 5px 10px;
         margin: 0;
-        font-size: 1.5em;
+        font-size: 1.2em;
         z-index: 3;
     }
     .weird-square p {
@@ -748,7 +779,7 @@ body.dark-mode .date-selection button {
         color: black;
         padding: 5px 10px;
         margin: 0;
-        font-size: 1.5em;
+        font-size: 1.2em;
         z-index: 3;
     }
     .weird-square p {
