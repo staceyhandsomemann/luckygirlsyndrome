@@ -5,7 +5,8 @@ body {
     display: flex;
     flex-direction: column;
     height: 100vh;
-    transition: background-color 0.3s, color 0.3s; /* Smooth transition for dark mode */;
+    transition: background-color 0.3s, color 0.3s; /* Smooth transition for dark mode */
+    font-size: 1.2em;
 }
 header {
     background-color: #f4f4f4;
@@ -299,6 +300,35 @@ body.dark-mode #close-menu {
     font-size: 1em;
     z-index: 3;
 }
+.about {
+    position: absolute;
+    top: 680px;
+    left: 10px;
+    width: 500px;
+    height: 250px;
+    background-color: rgba(255, 255, 255, 0.85); /* Semi-transparent red */
+    z-index: 2;
+    transition: background-color 0.3s, color 0.3s; /* Smooth transition for dark mode */
+}
+.about h2 {
+    position: absolute;
+    top: 7px;
+    color: black;
+    padding: 5px 10px;
+    margin: 0;
+    font-size: 2em;
+    z-index: 3;
+    line-height: 1em;
+}
+.about p {
+    position: absolute;
+    top: 57px;
+    color: black;
+    padding: 5px 10px;
+    margin: 0;
+    font-size: 1em;
+    z-index: 3;
+}
 .redirectrates {
     position: absolute;
     top: 736px;
@@ -479,6 +509,15 @@ body.dark-mode .weird-square h2 {
 body.dark-mode .weird-square p {
     color: #e0e0e0;
 }
+body.dark-mode .about {
+    background-color: rgba(0, 0, 0, 0.85);
+}
+body.dark-mode .about h2 {
+    color: #e0e0e0;
+}
+body.dark-mode .about p {
+    color: #e0e0e0;
+}
 body.dark-mode .redirectrates button {
     background-color: #1e1e1e;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
@@ -643,6 +682,31 @@ body.dark-mode .date-selection button {
         font-size: 0.8em;
         z-index: 3;
     }
+    .about {
+        position: absolute;
+        top: 235px;
+        left: 10px;
+        width: 350px;
+        height: 250px;
+    }
+    .about h2 {
+        position: absolute;
+        top: 4px;
+        color: black;
+        padding: 5px 10px;
+        margin: 0;
+        font-size: 1.2em;
+        z-index: 3;
+    }
+    .about p {
+        position: absolute;
+        top: 32px;
+        color: black;
+        padding: 5px 10px;
+        margin: 0;
+        font-size: 0.8em;
+        z-index: 3;
+    }
     .redirectrates {
         position: absolute;
         top: 270px;
@@ -751,7 +815,7 @@ body.dark-mode .date-selection button {
         column-count: 2; /* Fewer columns on tablet for better readability */
     }
     .slideshow {
-        height: 300px;
+        height: 450px;
     }
     .slideshow h2 {
         font-size: 2em;
@@ -767,7 +831,7 @@ body.dark-mode .date-selection button {
     }
     .weird-square {
         position: absolute;
-        top: 210px;
+        top: 350px;
         left: 10px;
         width: 220px;
         height: 250px;
@@ -790,9 +854,34 @@ body.dark-mode .date-selection button {
         font-size: 0.8em;
         z-index: 3;
     }
+    .about {
+        position: absolute;
+        top: 380px;
+        left: 10px;
+        width: 350px;
+        height: 250px;
+    }
+    .about h2 {
+        position: absolute;
+        top: 4px;
+        color: black;
+        padding: 5px 10px;
+        margin: 0;
+        font-size: 1.2em;
+        z-index: 3;
+    }
+    .about p {
+        position: absolute;
+        top: 32px;
+        color: black;
+        padding: 5px 10px;
+        margin: 0;
+        font-size: 0.8em;
+        z-index: 3;
+    }
     .redirectrates {
         position: absolute;
-        top: 270px;
+        top: 410px;
         left: 20px;
         z-index: 4;
     }
@@ -826,5 +915,4 @@ body.dark-mode .date-selection button {
     .faqs-container {
         grid-template-columns: repeat(2, 1fr); /* 1 column on tablets for simplicity */
     }
-
 }
