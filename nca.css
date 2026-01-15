@@ -573,6 +573,9 @@ body.dark-mode .date-selection button {
     header {
         display: flex; /* Show on tablet and phone */
     }
+    header h1 {
+        font-size: 1.5em;
+    }
     #dark-mode-toggle {
         background: none;
         border: none;
@@ -639,6 +642,7 @@ body.dark-mode .date-selection button {
     .content {
         order: 1; /* Content first */
         margin-left: 0px;
+        font-size: 0.8em;
     }
     .photo-collage {
         column-count: 2; /* Fewer columns on mobile for better readability */
@@ -887,13 +891,6 @@ body.dark-mode .date-selection button {
     }
     .redirectrates button {
         font-size: 0.8em;
-    }
-    .features {
-        margin-top: 2rem;
-        font-size: 1.2em;
-        text-align: center;
-        padding-left: 1rem;
-        padding-right: 1rem;
     }
     .features {
         margin-top: 2rem;
